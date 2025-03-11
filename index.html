@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Underwriter - Ashes [EP Release]</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <canvas id="particleCanvas-back"></canvas>
+        
+        <div class="album-container">
+            <div class="album-art">
+                <img src="Album_Cover.png" alt="Ashes EP Cover Art" id="albumArt">
+                <div class="play-button" id="playButton">
+                    <div class="play-icon"></div>
+                </div>
+            </div>
+            <div class="track-info">
+                <h1 class="track-title">Ashes of the Architects</h1>
+                <h2 class="artist-name">Underwriter</h2>
+            </div>
+        </div>
+
+        <canvas id="particleCanvas-front"></canvas>
+        <div class="fog-overlay"></div>
+        <div class="vignette"></div>
+
+        <audio id="audioPlayer" src="Odin_final13.wav"></audio>
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="scripts/audioController.js"></script>
+    <script src="scripts/particleSystem.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html> 
