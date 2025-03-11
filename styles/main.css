@@ -10,7 +10,7 @@
     --secondary-dark: #1a1a1a;
     --accent-red: #ff1a1a;
     --text-color: #ffffff;
-    --glow-color: rgba(255, 26, 26, 0.3);
+    --glow-color: rgba(255, 0, 0, 0.7); /* Increased opacity for stronger glow */
 }
 
 body {
@@ -20,6 +20,12 @@ body {
     min-height: 100vh;
     overflow: hidden;
     position: relative;
+    transition: background-color 0.5s ease;
+}
+
+/* Music active state - subtle background color change */
+body.music-active {
+    background-color: #0c0808; /* Slightly reddish dark background */
 }
 
 /* Container Styles */
@@ -65,13 +71,36 @@ body {
     z-index: 2;
 }
 
+/* Remove glow canvas styles as we're now using direct album art glow */
+/* #glowCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300%;
+    height: 300%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.9;
+    transition: opacity 0.1s ease-in-out;
+    mix-blend-mode: screen;
+    filter: blur(20px);
+} */
+
 .album-art {
     position: relative;
     width: 100%;
     aspect-ratio: 1;
     border-radius: 8px;
-    box-shadow: 0 0 30px var(--glow-color);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Keep the glow within bounds */
+}
+
+.music-active .album-art {
+    box-shadow: 0 0 70px 20px var(--glow-color); /* Default glow in music-active state */
 }
 
 .album-art:hover {
@@ -84,6 +113,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    transition: all 0.2s ease;
 }
 
 /* Track Info Styles */
@@ -92,6 +122,11 @@ body {
     text-align: center;
     opacity: 0.9;
     text-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
+    transition: text-shadow 0.3s ease;
+}
+
+.music-active .track-info {
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* Enhanced text glow when music is active */
 }
 
 .track-title {
@@ -217,4 +252,157 @@ body {
 
 .flicker {
     animation: flicker 3s infinite;
-} 
+}
+
+.clock-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.clock {
+    width: 1000px;
+    height: 1000px;
+    border: 16px solid rgba(255, 0, 0, 0.4);
+    border-radius: 50%;
+    position: relative;
+    background: rgba(0, 0, 0, 0); /* Changed from 0.2 to 0 - fully transparent */
+    backdrop-filter: blur(5px);
+    z-index: -1; /* Move behind other elements */
+}
+
+@media (max-width: 768px) {
+    .clock {
+        width: 500px;
+        height: 500px;
+        border-width: 12px;
+        background: rgba(0, 0, 0, 0); /* Ensure transparency on mobile */
+    }
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 8px;
+    height: 48%;
+    background: rgba(255, 0, 0, 0.6);
+    transform-origin: bottom;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 0.1s cubic-bezier(0.4, 2.3, 0.3, 1);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    z-index: -1; /* Move behind other elements */
+}
+
+/* Utility class to completely hide elements */
+.completely-hidden {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    z-index: -9999 !important;
+    overflow: hidden !important;
+}
+
+.center-point {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0; /* Changed from 30px to 0 */
+    height: 0; /* Changed from 30px to 0 */
+    background: transparent;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: none;
+    opacity: 0; /* Added opacity 0 */
+    visibility: hidden; /* Added visibility hidden */
+    z-index: -2; /* Move behind other elements */
+    display: none !important; /* Force hide */
+}
+
+@media (max-width: 768px) {
+    .hand {
+        width: 6px;
+        height: 45%;
+        z-index: -1; /* Ensure it's behind on mobile */
+    }
+    
+    .center-point {
+        width: 0; /* Changed from 20px to 0 */
+        height: 0; /* Changed from 20px to 0 */
+        background: transparent;
+        box-shadow: none;
+        opacity: 0; /* Added opacity 0 */
+        visibility: hidden; /* Added visibility hidden */
+        z-index: -2; /* Move behind other elements */
+    }
+}
+
+.clock.animate {
+    animation: fadeInOut 10s forwards;
+}
+
+.clock.animate .hand {
+    animation: tickClock 10s linear forwards;
+}
+
+@keyframes tickClock {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    10% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+/* Override any styling that might be causing the black dot */
+.clock-container .clock .center-point,
+.clock-container .clock .center-point::before,
+.clock-container .clock .center-point::after,
+.center-point,
+.center-point::before,
+.center-point::after {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Ensure the clock background is transparent */
+.clock-container .clock,
+.clock {
+    background: transparent !important;
+}
