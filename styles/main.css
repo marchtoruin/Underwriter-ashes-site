@@ -47,7 +47,7 @@ body.music-active {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 1; /* Behind album cover */
 }
 
 #particleCanvas-front {
@@ -57,7 +57,7 @@ body.music-active {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 3;
+    z-index: 5; /* In front of album cover but behind play button */
 }
 
 /* Album Art Container */
@@ -68,7 +68,7 @@ body.music-active {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    z-index: 2;
+    z-index: 2; /* Between back and front particles */
 }
 
 /* Remove glow canvas styles as we're now using direct album art glow */
@@ -93,7 +93,7 @@ body.music-active {
     aspect-ratio: 1;
     border-radius: 8px;
     transition: all 0.3s ease;
-    z-index: 1;
+    z-index: 3; /* Above album container but below front particles */
     background: rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     overflow: hidden; /* Keep the glow within bounds */
@@ -123,6 +123,7 @@ body.music-active {
     opacity: 0.9;
     text-shadow: 0 0 10px rgba(255, 26, 26, 0.3);
     transition: text-shadow 0.3s ease;
+    z-index: 4; /* Above album art but below front particles */
 }
 
 .music-active .track-info {
@@ -158,7 +159,7 @@ body.music-active {
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
-    z-index: 6;
+    z-index: 6; /* Above front particles */
 }
 
 .play-button:hover {

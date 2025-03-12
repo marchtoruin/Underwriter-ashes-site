@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bassIntensity > 0) { // Only react when there's a peak above threshold
             // Nearly instantaneous reaction to peaks for particle speed
             const currentSpeed = particleSystem.baseSpeed;
-            const targetSpeed = 0.15 + (bassIntensity / 255) * 0.7; // Keep the same target speed
+            // Further reduce the target speed (even slower than half)
+            const targetSpeed = 0.04 + (bassIntensity / 255) * 0.2; // Reduced from 0.075 + 0.35
             
             // Slower attack (80% of the way to target in one frame instead of 98%)
             particleSystem.baseSpeed = currentSpeed * 0.2 + targetSpeed * 0.8; // Reduced from 0.98 for slower attack
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             // Slower return to default speed
-            particleSystem.baseSpeed = particleSystem.baseSpeed * 0.9 + 0.15 * 0.1; // Changed from 0.8/0.2 for slower return
+            particleSystem.baseSpeed = particleSystem.baseSpeed * 0.9 + 0.04 * 0.1; // Changed default speed from 0.075 to 0.04
         }
     });
 
@@ -60,8 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
         particleSystem.update(bassIntensity);
     }
 
-    // Start animation loop
-    animate();
+    // Start animation loop - but only initialize particles after intro is complete
+    // Check if the container has the 'show' class (added by intro.js)
+    const checkIntroComplete = () => {
+        if (document.querySelector('.container').classList.contains('show')) {
+            // Intro is complete, start animation
+            animate();
+        } else {
+            // Check again in a short while
+            setTimeout(checkIntroComplete, 100);
+        }
+    };
+    
+    // Start checking if intro is complete
+    checkIntroComplete();
 
     const playButton = document.querySelector('.play-button');
     const clockContainer = document.querySelector('.clock-container');

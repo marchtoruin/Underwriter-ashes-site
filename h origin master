@@ -1,0 +1,17 @@
+[33mcommit 3c225b2b130bd80ccdb5958f4f37465e12c9f5de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Justin McClure <justin.j.mcclure@hotmail.com>
+Date:   Tue Mar 11 17:10:47 2025 -0700
+
+    Enhanced particle system with more particles, wind effects, and randomness
+
+[33mcommit 66f27d9e596aca018f3c4ad3ce8bac0ed7581c8e[m
+Author: Justin McClure <justin.j.mcclure@hotmail.com>
+Date:   Tue Mar 11 15:54:31 2025 -0700
+
+    Enhanced music visualizer with improved particle effects, fluid color transitions, and optimized audio response
+
+[33mcommit 4e5d87338f3075f00752c12a557c3cb88f3e8d99[m
+Author: Justin McClure <justin.j.mcclure@hotmail.com>
+Date:   Tue Mar 11 13:15:57 2025 -0700
+
+    Initial commit: Underwriter Ashes EP landing page

@@ -1,0 +1,158 @@
+/* Intro Animation Styles */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+    overflow: hidden;
+}
+
+.intro-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-logo-container {
+    position: relative;
+    width: 300px;
+    max-width: 80%;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(255, 0, 0, 0.03),
+        0 0 30px rgba(0, 0, 255, 0.03);
+    animation: tv-flicker 8s infinite;
+    padding-bottom: 10px;
+    background-color: rgba(20, 20, 20, 0.3);
+}
+
+/* TV static noise overlay */
+.intro-logo-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+    background-size: 150px;
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 10002;
+}
+
+/* CRT Scan Line Effect */
+.intro-logo-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(32, 32, 32, 0.2) 50%,
+        transparent 100%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: scan-lines 8s linear infinite;
+    z-index: 10000;
+}
+
+.intro-logo {
+    width: 100%;
+    opacity: 0.15;
+    filter: brightness(0.7) contrast(1.2);
+    animation: flicker-crt 4s linear forwards;
+    position: relative;
+}
+
+/* CRT Flicker Animation */
+@keyframes flicker-crt {
+    0% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.98) skew(0.5deg, 0deg); }
+    3% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0.5px); transform: scale(1) skew(0deg, 0.5deg); }
+    5% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.99) skew(-0.5deg, 0deg); }
+    10% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0px); transform: scale(1.01) skew(0deg, -0.5deg); }
+    15% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.98) skew(0.5deg, 0deg); }
+    20% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0.5px); transform: scale(1) skew(0deg, 0.5deg); }
+    23% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.99) skew(-0.5deg, 0deg); }
+    25% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0px); transform: scale(1.01) skew(0deg, -0.5deg); }
+    30% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.98) skew(0.5deg, 0deg); }
+    35% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0.5px); transform: scale(1) skew(0deg, 0.5deg); }
+    40% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.99) skew(-0.5deg, 0deg); }
+    45% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0px); transform: scale(1.01) skew(0deg, -0.5deg); }
+    50% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.98) skew(0.5deg, 0deg); }
+    55% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0.5px); transform: scale(1) skew(0deg, 0.5deg); }
+    60% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.99) skew(-0.5deg, 0deg); }
+    70% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0px); transform: scale(1.01) skew(0deg, -0.5deg); }
+    80% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.98) skew(0.5deg, 0deg); }
+    90% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0.5px); transform: scale(1) skew(0deg, 0.5deg); }
+    95% { opacity: 0.05; filter: brightness(0.5) contrast(1.2) blur(1px); transform: scale(0.99) skew(-0.5deg, 0deg); }
+    100% { opacity: 0.15; filter: brightness(0.7) contrast(1.2) blur(0px); transform: scale(1.01) skew(0deg, -0.5deg); }
+}
+
+@keyframes scan-lines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+/* TV Screen Flicker Effect */
+@keyframes tv-flicker {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05), 0 0 20px rgba(255, 0, 0, 0.03), 0 0 30px rgba(0, 0, 255, 0.03);
+        background-color: rgba(20, 20, 20, 0.3);
+    }
+    25% { 
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.07), 0 0 22px rgba(255, 0, 0, 0.05), 0 0 32px rgba(0, 0, 255, 0.05);
+        background-color: rgba(25, 25, 25, 0.35);
+    }
+    50% { 
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.03), 0 0 18px rgba(255, 0, 0, 0.02), 0 0 28px rgba(0, 0, 255, 0.02);
+        background-color: rgba(15, 15, 15, 0.25);
+    }
+    75% { 
+        box-shadow: 0 0 14px rgba(255, 255, 255, 0.08), 0 0 24px rgba(255, 0, 0, 0.06), 0 0 34px rgba(0, 0, 255, 0.06);
+        background-color: rgba(30, 30, 30, 0.4);
+    }
+}
+
+/* Random Glitch Animation */
+.intro-logo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    opacity: 0;
+    animation: random-glitch 4s steps(1) infinite;
+}
+
+@keyframes random-glitch {
+    0%, 93%, 95%, 98%, 100% { opacity: 0; transform: translateX(0); }
+    94%, 96%, 99% { opacity: 0.1; transform: translateX(5px); }
+    97% { opacity: 0.2; transform: translateX(-5px); }
+}
+
+/* Hide main content until intro is complete */
+.container {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.container.show {
+    opacity: 1;
+} 
